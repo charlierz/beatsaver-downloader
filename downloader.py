@@ -9,18 +9,17 @@ import cfscrape
 scraper = cfscrape.create_scraper()
 
 min_nps = 3
-max_nps = 9.5
 min_score_expert_plus = 0.75
 
 days_to_stable = 14
-download_location = "D:/archive/BeatSaber/downloader/"
+download_location = "//nas-charlie/Archive/BeatSaber/downloader/"
 
 
 def run_downloader():
     if not os.path.exists(download_location):
         os.makedirs(download_location)
 
-    next_page = 10
+    next_page = 20
     now = datetime.now(pytz.utc)
     from_date = now - timedelta(days=days_to_stable)
     until_date = None
@@ -84,9 +83,9 @@ def download_from_page(page_number, from_date, until_date):
                             break
 
                     if (
-                        stats.get("score") >= min_score_expert_plus
-                        and nps_expert_plus >= min_nps
-                        and nps_expert_plus <= max_nps
+                        (stats.get("score") >= min_score_expert_plus
+                        and nps_expert_plus >= min_nps)
+                        or doc.get("ranked")
                     ):
                         filename = doc.get("id") + " - " + metadata.get("songName")
                         filename = remove_disallowed_filename_chars(filename)

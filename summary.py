@@ -5,7 +5,7 @@ import cfscrape
 scraper = cfscrape.create_scraper()
 
 # check_location = "D:/archive/BeatSaber/good/3_g/"
-check_location = "D:/archive/BeatSaber/new/1e/"
+check_location = "//nas-charlie/Archive/BeatSaber/good/6_g/"
 destination_file = check_location + "check_results.csv"
 
 
