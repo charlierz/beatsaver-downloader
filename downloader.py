@@ -12,7 +12,7 @@ min_nps = 3
 min_score_expert_plus = 0.75
 
 days_to_stable = 14
-download_location = "//nas-charlie/Archive/BeatSaber/downloader/"
+download_location = "//nas-charlie/Archive/Beat Saber Archive/downloader/"
 
 
 def run_downloader():
