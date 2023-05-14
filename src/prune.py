@@ -15,12 +15,10 @@ min_score_expert_plus = 0.75
 
 
 def run_prune():
-
     if not os.path.exists(DELETE_LOCATION):
         os.makedirs(DELETE_LOCATION)
 
     for dirname, dirnames, filenames in os.walk(PRUNE_LOCATION, topdown=True):
-
         for filename in filenames:
             filename_parts = filename.split(" - ", 1)
             key = filename_parts[0]
@@ -48,7 +46,6 @@ def contains(list, filter):
 
 
 def should_delete(data):
-
     if data.get("stats").get("score") < min_score_expert_plus:
         return True
 

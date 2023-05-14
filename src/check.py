@@ -37,7 +37,6 @@ def run_check():
 
 
 def check_values():
-
     array = []
 
     for dirname, dirnames, filenames in os.walk(CHECK_LOCATION):

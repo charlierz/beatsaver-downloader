@@ -17,6 +17,7 @@ MIN_NPS = 3
 DAYS_TO_STABLE = 14
 TRACKED_RUNS_LOCATION = "./data/download_runs.txt"
 
+
 def run_downloader():
     if not os.path.exists(DOWNLOAD_LOCATION):
         os.makedirs(DOWNLOAD_LOCATION)
@@ -59,7 +60,6 @@ def download_from_page(page_number, from_date, until_date):
     )
     data = r.json()
     for doc in data.get("docs"):
-
         uploaded = dateutil.parser.parse(doc.get("uploaded"))
         if until_date is not None and uploaded < until_date:
             print("Until Date Reached")
@@ -67,11 +67,10 @@ def download_from_page(page_number, from_date, until_date):
         elif uploaded < from_date:
             metadata = doc.get("metadata")
             stats = doc.get("stats")
-
             for version in doc.get("versions"):
                 difficulties = version.get("diffs")
-                hasExpertPlus = contains(
-                    difficulties, lambda x: x.get("difficulty") == "ExpertPlus"
+                hasExpertPlus = any(
+                    diff.get("difficulty") == "ExpertPlus" for diff in difficulties
                 )
                 if hasExpertPlus:
                     nps_expert_plus = None
@@ -84,10 +83,9 @@ def download_from_page(page_number, from_date, until_date):
                             break
 
                     if (
-                        (stats.get("score") >= MIN_SCORE_EXPERT_PLUS
-                        and nps_expert_plus >= MIN_NPS)
-                        or doc.get("ranked")
-                    ):
+                        stats.get("score") >= MIN_SCORE_EXPERT_PLUS
+                        and nps_expert_plus >= MIN_NPS
+                    ) or doc.get("ranked"):
                         filename = doc.get("id") + " - " + metadata.get("songName")
                         filename = remove_disallowed_filename_chars(filename)
                         try:
@@ -102,6 +100,7 @@ def download_from_page(page_number, from_date, until_date):
 
 
 validFilenameChars = "-_.() %s%s" % (string.ascii_letters, string.digits)
+
 
 def remove_disallowed_filename_chars(filename):
     cleaned_filename = unicodedata.normalize("NFKD", filename).encode("ASCII", "ignore")
