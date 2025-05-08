@@ -2,13 +2,14 @@ from dotenv import load_dotenv
 import os
 import csv
 import cfscrape
+import time
 
 scraper = cfscrape.create_scraper()
 load_dotenv()
 
 CHECK_LOCATION = os.getenv("CHECK_LOCATION")
 
-destination_file = check_location + "check_results.csv"
+destination_file = CHECK_LOCATION + "check_results.csv"
 
 
 def run_check():
@@ -41,6 +42,7 @@ def check_values():
 
     for dirname, dirnames, filenames in os.walk(CHECK_LOCATION):
         for filename in filenames:
+            time.sleep(0.1)
             filename_parts = filename.split(" - ", 1)
             key = filename_parts[0]
 
