@@ -10,7 +10,7 @@ import cfscrape
 scraper = cfscrape.create_scraper()
 load_dotenv()
 
-DOWNLOAD_LOCATION = os.getenv("DOWNLOAD_LOCATION")
+DOWNLOAD_LOCATION: str = os.getenv("DOWNLOAD_LOCATION")  # type: ignore[assignment]
 
 MIN_SCORE_EXPERT_PLUS = 0.80
 MIN_NPS = 2
@@ -85,6 +85,7 @@ def download_from_page(page_number, from_date, until_date):
 
                     if (
                         stats.get("score") >= MIN_SCORE_EXPERT_PLUS
+                        and nps_expert_plus is not None
                         and nps_expert_plus >= MIN_NPS
                     ) or doc.get("ranked"):
                         filename = doc.get("id") + " - " + metadata.get("songName")
@@ -92,9 +93,9 @@ def download_from_page(page_number, from_date, until_date):
                         try:
                             print(filename)
                             r_file = scraper.get(version.get("downloadURL"))
-                            with open(DOWNLOAD_LOCATION + filename + ".zip", "wb") as f:
+                            with open(DOWNLOAD_LOCATION + filename + ".zip", "wb") as f:  # type: ignore[operator]
                                 f.write(r_file.content)
-                        except:
+                        except Exception:
                             pass
 
     return page_number + 1

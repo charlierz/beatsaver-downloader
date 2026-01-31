@@ -7,8 +7,8 @@ import time
 scraper = cfscrape.create_scraper()
 load_dotenv()
 
-PRUNE_LOCATION = os.getenv("PRUNE_LOCATION")
-DELETE_LOCATION = os.getenv("DELETE_LOCATION")
+PRUNE_LOCATION: str = os.getenv("PRUNE_LOCATION")  # type: ignore[assignment]
+DELETE_LOCATION: str = os.getenv("DELETE_LOCATION")  # type: ignore[assignment]
 
 GREAT_LOCATION = PRUNE_LOCATION + "/_g"
 
@@ -41,7 +41,7 @@ def run_prune():
                 if should_delete(data):
                     shutil.move(
                         os.path.join(dirname, filename),
-                        os.path.join(DELETE_LOCATION, filename),
+                        os.path.join(DELETE_LOCATION, filename),  # type: ignore[arg-type]
                     )
                 elif should_move_great(data):
                     shutil.move(
@@ -75,6 +75,8 @@ def should_delete(data):
 
     if nps_expert_plus and (nps_expert_plus < min_nps or nps_expert_plus > max_nps):
         return True
+
+    return False
 
 
 def should_move_great(data):

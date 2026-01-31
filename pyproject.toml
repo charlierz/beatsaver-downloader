@@ -1,0 +1,30 @@
+[project]
+name = "beatsaver-downloader"
+version = "0.1.0"
+description = "Personal scripts to manage Beat Saber custom songs library"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "cfscrape==2.1.1",
+    "python-dateutil==2.8.0",
+    "python-dotenv==1.0.0",
+    "pytz==2019.2",
+    "requests==2.31.0",
+    "urllib3==1.26.20",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.37.2",
+    "ruff>=0.14.14",
+]
+
+[tool.basedpyright]
+typeCheckingMode = "standard"
+include = ["src"]
+exclude = ["**/__pycache__", ".venv"]
+

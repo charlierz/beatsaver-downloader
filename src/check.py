@@ -7,7 +7,7 @@ import time
 scraper = cfscrape.create_scraper()
 load_dotenv()
 
-CHECK_LOCATION = os.getenv("CHECK_LOCATION")
+CHECK_LOCATION: str = os.getenv("CHECK_LOCATION")  # type: ignore[assignment]
 
 destination_file = CHECK_LOCATION + "check_results.csv"
 
